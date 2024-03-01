@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>py_photo-platform - User Page</title>
+    <meta name="description" content="A photography sharing platform.">
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.css">
+
+    <link rel="icon" href="/assets/images/favicon.png">
+    <link rel="apple-touch-icon" href="/assets/images/favicon.png">
+
+    <!-- Facebook integration -->
+    <meta property="og:title" content='User Page on py_photo-platform'>
+    <meta property="og:url" content="https://github.com/sprechender/py_photo-platform">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="py_photo-platform">
+    <meta property="og:description" content="A photography sharing platform.">
+
+    <!-- Twitter integration -->
+    <meta name="twitter:card" content="py_photo-platform">
+    <meta name="twitter:title" content='User Page on py_photo-platform'>
+    <meta name="twitter:url" content="https://github.com/sprechender/py_photo-platform">
+    <meta name="twitter:description" content="A photography sharing platform.">
+
+</head>
+
+<body>
+    <header>
+        <nav>
+            <p><strong>py_photo-platform</strong></p>
+            <a href="/">Home</a>
+            <a href="/top">Top</a>
+            <a href="/recent">Recent</a>
+            <a href="/logout">Logout</a>
+        </nav>
+
+        <p><strong><code class="language-plaintext highlighter-rouge">{{ username }}</code><span id="sOfUser"></span> page </strong></p>
+        <p>{{ followers }} followers <strong>|</strong> {{ bio }}</p>
+        <p><a class="button" href="/logout">Follow</a></p>
+        <form action="#" method="post">
+            <button type="submit" name="button__follow">Follow</button>
+        </form>
+    </header>
+    
+        <script>
+            span__sOfUser = document.getElementById("sOfUser")
+
+            username = "{{ username }}";
+            if (username.slice(-1) == "s") {
+                console.log("is s");
+            } else {
+                span__sOfUser.textContent = "'s";
+            }
+        </script>
+    <!-- Uploaded Photos -->
+    <section>
+        <h2>Photos</h2>
+        <!-- Display grid/gallery of uploaded photos -->
+        <!-- Include option to edit/delete each photo -->
+        <!-- Include sorting/filtering options -->
+    </section>
+    
+    <!--
+    Albums or Collections
+    <section>
+        <h2>Albums or Collections</h2>
+        Display user's albums/collections
+        Include option to create/edit/delete albums
+    </section>
+    -->
+    
+    <footer>
+        <p>py_photo-platform was created by <a href="https://marcelschreiber.de">Marcel Schreiber</a> and is licensed
+            under the MIT license.<br>
+            <a href="https://github.com/py_photo-platform">Source code for this site</a></p>
+    </footer>
+        
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>py_photo-platform</title>
+    <meta name="description" content="A python photography sharing platform.">
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.css">
+
+    <link rel="icon" href="/assets/images/favicon.png">
+    <link rel="apple-touch-icon" href="/assets/images/favicon.png">
+
+    <!-- Facebook integration -->
+    <meta property="og:title" content="Simple.css Demo">
+    <meta property="og:image" content="https://simplecss.org/assets/images/simple-css-feature.webp">
+    <meta property="og:url" content="https://simplecss.org/demo">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Simple.css">
+    <meta property="og:description" content="A showcase of Simple.css formatting in action and how to use it.">
+
+    <!-- Twitter integration -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Simple.css Demo">
+    <meta name="twitter:image" content="https://simplecss.org/assets/images/simple-css-feature.webp">
+    <meta name="twitter:url" content="https://simplecss.org/demo">
+    <meta name="twitter:description"
+        content="Simple.css is classless CSS template that allows you to create a good looking website very quickly.">
+
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="/" class="current">Home</a>
+            <a href="/top">Top</a>
+            <a href="/recent">Recent</a>
+            <a href="/myaccount">My Account</a>
+        </nav>
+
+        <h1>py_photo-platform</h1>
+        <p><strong>Signup</strong></p>
+    </header>
+
+    <form action="/signup" method="post">
+        <p>
+            <label>Username</label>
+            <input type="text" name="username">
+        </p>
+        <p>
+            <label>Password</label>
+            <input type="password" name="password">
+        </p>
+        <p>
+            <label>
+                <input type="checkbox" id="checkbox" value="terms" required="true">
+                I agree to the <a href="#">terms and conditions</a>
+            </label>
+        </p>
+
+        <button type="submit">Login</button>
+        <button type="reset">Reset</button>
+    </form>
+
+    <footer>
+        <p>py_photo-platform was created by <a href="https://marcelschreiber.de">Marcel Schreiber</a> and is licensed
+            under the MIT license.<br>
+            <a href="https://github.com/py_photo-platform">Source code for this site</a></p>
+    </footer>
+
+</body>
+
+</html>
