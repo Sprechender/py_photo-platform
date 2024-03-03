@@ -116,6 +116,19 @@ def user_page(user_id):
             db.session.commit()
     user = User.query.get_or_404(user_id)
     return render_template('user_page.html', user=user, username=user.username, followers=user.followers, bio=user.bio)
+
+@app.route('/usrset/edit', methods=['POST', 'GET'])
+@login_required
+def edit_bio():
+    if request.method == 'POST':
+        new_bio = request.form['new_bio']
+        current_user.bio = new_bio
+        db.session.commit()
+        flash('Bio updated successfully!')
+        return render_template('account.html', username=current_user.username, bio=current_user.bio, followers=current_user.followers)
+    if request.method == 'GET':
+        return render_template('user__edit.html', username=current_user.username, bio=current_user.bio, followers=current_user.followers)
+
 # Run the application
 if __name__ == '__main__':
     with app.app_context():
