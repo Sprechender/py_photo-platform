@@ -8,7 +8,7 @@ from flask_login import LoginManager, UserMixin, login_user, logout_user, login_
 app = Flask(__name__)
 app.secret_key = 'apfel123123'
 # app.config['SQLALCHEMY_DATABASE_URI'] = r'sqlite:///C:\Users\Marcel\Documents\GitHub\py_photo-platform\database.db'
-app.config['SQLALCHEMY_DATABASE_URI'] = r'sqlite:///C:/Users/Marcel/Documents/GitHub/py_photo-platform/prod.db.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = r'sqlite:///prod.db.db'
 
 # Initialize SQLAlchemy
 db = SQLAlchemy(app)
