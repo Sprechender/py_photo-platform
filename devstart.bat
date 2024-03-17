@@ -1,4 +1,4 @@
 @echo off
 :beginning
-py app.py
+python app.py
 goto beginning
