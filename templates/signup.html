@@ -40,34 +40,25 @@
             <a href="/myaccount">My Account</a>
         </nav>
 
-        <h1>py_photo-platform</h1>
-        <p><strong>Signup</strong></p>
+        <h1>Signup</h1>
+        <p>py_photo-platform</p>
     </header>
 
-    <form action="/signup" method="post">
+    <form action="/signup" method="post" style="display: grid; place-items: center;">
         <p>
             <label>Username</label>
-            <input type="text" name="username">
-        </p>
-        <p>
+            <input type="text" name="username" placeholder="Username">
             <label>Password</label>
-            <input type="password" name="password">
+            <input type="password" name="password" placeholder="Password">
+            <label><a href="/login">already have an account?</a></label>
         </p>
-        <p>
-            <label>
-                <input type="checkbox" id="checkbox" value="terms" required="true">
-                I agree to the <a href="#">terms and conditions</a>
-            </label>
-        </p>
-
-        <button type="submit">Login</button>
-        <button type="reset">Reset</button>
+        <button type="submit">Sign up!</button>
     </form>
 
     <footer>
         <p>py_photo-platform was created by <a href="https://marcelschreiber.de">Marcel Schreiber</a> and is licensed
             under the MIT license.<br>
-            <a href="https://github.com/py_photo-platform">Source code for this site</a></p>
+        <a href="https://github.com/py_photo-platform">Source code for this site</a></p>
     </footer>
 
 </body>

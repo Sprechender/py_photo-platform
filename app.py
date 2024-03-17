@@ -108,7 +108,8 @@ def user_page(user_id):
         # Check if the current user already follows the user
         existing_follow = Follows.query.filter_by(follower_id=current_user.id, followed_id=user_id).first()
         if existing_follow:
-            flash('You already follow this user.')
+            db.session.delete(User.query.get(current_user.id))
+            db.session.commit()
         else:
             # Create a new follow relationship
             new_follow = Follows(follower_id=current_user.id, followed_id=user_id)

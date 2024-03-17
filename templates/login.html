@@ -40,28 +40,20 @@
             <a href="/myaccount">My Account</a>
         </nav>
 
-        <h1>py_photo-platform</h1>
-        <p><strong>Login</strong></p>
+        <h1>Login</h1>
+        <p>py_photo-platform</p>
     </header>
 
-    <form action="/login" method="post">
+    <form action="/login" method="post" style="display: grid; place-items: center;">
         <p>
             <label>Username</label>
-            <input type="text" name="username">
-        </p>
-        <p>
+            <input type="text" name="username" placeholder="Username">
             <label>Password</label>
-            <input type="password" name="password">
+            <input type="password" name="password" placeholder="Password">
+            <label><a href="/signup">create account?</a></label>
+            <label><a href="/recovery__user">recover account</a></label>
         </p>
-        <p>
-            <label>
-                <input type="checkbox" id="checkbox" value="terms">
-                I agree to the <a href="#">terms and conditions</a>
-            </label>
-        </p>
-
         <button type="submit">Login</button>
-        <button type="reset">Reset</button>
     </form>
 
     <footer>
