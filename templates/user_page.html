@@ -1,84 +1,271 @@
 <!DOCTYPE html>
-<html lang="en-GB">
+<html>
 
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>py_photo-platform</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/bulma-prefers-dark@0.1.0-beta.1/css/bulma-prefers-dark.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 
-    <title>py_photo-platform - User Page</title>
-    <meta name="description" content="A photography sharing platform.">
-    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.css">
-
-    <link rel="icon" href="/assets/images/favicon.png">
-    <link rel="apple-touch-icon" href="/assets/images/favicon.png">
-
-    <!-- Facebook integration -->
-    <meta property="og:title" content='User Page on py_photo-platform'>
-    <meta property="og:url" content="https://github.com/sprechender/py_photo-platform">
-    <meta property="og:type" content="article">
-    <meta property="og:site_name" content="py_photo-platform">
-    <meta property="og:description" content="A photography sharing platform.">
-
-    <!-- Twitter integration -->
-    <meta name="twitter:card" content="py_photo-platform">
-    <meta name="twitter:title" content='User Page on py_photo-platform'>
-    <meta name="twitter:url" content="https://github.com/sprechender/py_photo-platform">
-    <meta name="twitter:description" content="A photography sharing platform.">
-
+    <script src="https://kit.fontawesome.com/2ecfe5bd5c.js" crossorigin="anonymous"></script>
 </head>
 
+
 <body>
-    <header>
-        <nav>
-            <p><strong>py_photo-platform</strong></p>
-            <a href="/">Home</a>
-            <a href="/top">Top</a>
-            <a href="/recent">Recent</a>
-            <a href="/logout">Logout</a>
+
+    <section class="section">
+        <nav class="navbar" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="https://bulma.io" style="font-weight: bold;">
+                    <span style="font-size: small;">py_</span>photo-platform
+                </a>
+
+                <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+
+            <style>
+                .fawesomeMenu {
+                    color: #dbdbdb;
+                }
+
+                .fawesomeMenu:hover {
+                    color: #485fc7;
+                }
+            </style>
+
+            <div class="navbar-menu" id="navMenu">
+                <div class="navbar-start">
+                    <a class="navbar-item" href="../">
+                        Home
+                    </a>
+
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link">
+                            Photos
+                        </a>
+
+                        <div class="navbar-dropdown">
+                            <a class="navbar-item" style="font-weight: bold;">
+                                For you
+                            </a>
+                            <a class="navbar-item">
+                                Featured
+                            </a>
+                            <a class="navbar-item">
+                                Recent
+                            </a>
+                            <hr class="navbar-divider">
+                            <a class="navbar-item" style="color: hsl(348, 100%, 61%); font-weight: bold;">
+                                Report an issue
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="navbar-end">
+                    <div class="navbar-item">
+                        <div class="buttons">
+                            {% if not user_authenticated %}
+                            <a class="button is-primary">
+                                <strong>Sign up</strong>
+                            </a>
+                            <a class="button is-light">
+                                Log in
+                            </a>
+                            {% else %}
+                            <a href="/myaccount">
+                                <i class="fas fa-user fa-lg fawesomeMenu"></i>
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </nav>
-
-        <p><strong><code class="language-plaintext highlighter-rouge">{{ username }}</code><span id="sOfUser"></span> page </strong></p>
-        <p>{{ followers }} followers <strong>|</strong> {{ bio }}</p>
-        <p><a class="button" href="/logout">Follow</a></p>
-        <form action="#" method="post">
-            <button type="submit" name="button__follow">Follow</button>
-        </form>
-    </header>
-    
-        <script>
-            span__sOfUser = document.getElementById("sOfUser")
-
-            username = "{{ username }}";
-            if (username.slice(-1) == "s") {
-                console.log("is s");
-            } else {
-                span__sOfUser.textContent = "'s";
-            }
-        </script>
-    <!-- Uploaded Photos -->
-    <section>
-        <h2>Photos</h2>
-        <!-- Display grid/gallery of uploaded photos -->
-        <!-- Include option to edit/delete each photo -->
-        <!-- Include sorting/filtering options -->
     </section>
-    
-    <!--
-    Albums or Collections
-    <section>
-        <h2>Albums or Collections</h2>
-        Display user's albums/collections
-        Include option to create/edit/delete albums
+
+    <section class="section">
+        <div class="columns is-mobile">
+            <div class="column is-three-fifths is-offset-one-fifth" style="text-align: center;">
+                {% if err__followurself %}
+                <span class="tag is-danger" id="__errorTag">
+                    You can't follow yourself!
+                </span>
+
+                <script>
+                    setTimeout(() => {
+                        document.getElementById('__errorTag').style.display = "none";
+                    }, "5000"); // 10 seconds
+                </script>
+                {% endif %}
+
+                <h1 class="title is-1">{{ username }}</code><span id="sOfUser"></span> page</h1>
+                <form action="#" method="post">
+                    <button type="submit" name="button__follow" class="button">Follow</button>
+                </form>
+                <script>
+                    span__sOfUser = document.getElementById("sOfUser")
+
+                    username = "{{ username }}";
+                    if (username.slice(-1) == "s") {
+                        console.log("is s");
+                    } else {
+                        span__sOfUser.textContent = "'s";
+                    }
+                </script>
+            </div>
+        </div>
     </section>
-    -->
-    
-    <footer>
-        <p>py_photo-platform was created by <a href="https://marcelschreiber.de">Marcel Schreiber</a> and is licensed
-            under the MIT license.<br>
-            <a href="https://github.com/py_photo-platform">Source code for this site</a></p>
+
+    <section class="section">
+        <div class="columns is-mobile">
+            <div class="column is-three-fifths is-offset-one-fifth">
+                <div class="box">
+                    <h3 class="title is-3">Uploaded Photos</h3>
+
+                    <div class="columns">
+                        <div class="column is-one-third">
+                            <div class="card">
+                                <div class="card-image">
+                                    <figure class="image is-4by3">
+                                        <img src="https://bulma.io/images/placeholders/1280x960.png"
+                                            alt="Placeholder image">
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-one-third">
+                            <div class="card">
+                                <div class="card-image">
+                                    <figure class="image is-4by3">
+                                        <img src="https://bulma.io/images/placeholders/1280x960.png"
+                                            alt="Placeholder image">
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-one-third">
+                            <div class="card">
+                                <div class="card-image">
+                                    <figure class="image is-4by3">
+                                        <img src="https://bulma.io/images/placeholders/1280x960.png"
+                                            alt="Placeholder image">
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="columns">
+                        <div class="column is-one-third">
+                            <div class="card">
+                                <div class="card-image">
+                                    <figure class="image is-4by3">
+                                        <img src="https://bulma.io/images/placeholders/1280x960.png"
+                                            alt="Placeholder image">
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-one-third">
+                            <div class="card">
+                                <div class="card-image">
+                                    <figure class="image is-4by3">
+                                        <img src="https://bulma.io/images/placeholders/1280x960.png"
+                                            alt="Placeholder image">
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-one-third">
+                            <div class="card">
+                                <div class="card-image">
+                                    <figure class="image is-4by3">
+                                        <img src="https://bulma.io/images/placeholders/1280x960.png"
+                                            alt="Placeholder image">
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="columns">
+                        <div class="column is-one-third">
+                            <div class="card">
+                                <div class="card-image">
+                                    <figure class="image is-4by3">
+                                        <img src="https://bulma.io/images/placeholders/1280x960.png"
+                                            alt="Placeholder image">
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-one-third">
+                            <div class="card">
+                                <div class="card-image">
+                                    <figure class="image is-4by3">
+                                        <img src="https://bulma.io/images/placeholders/1280x960.png"
+                                            alt="Placeholder image">
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-one-third">
+                            <div class="card">
+                                <div class="card-image">
+                                    <figure class="image is-4by3">
+                                        <img src="https://bulma.io/images/placeholders/1280x960.png"
+                                            alt="Placeholder image">
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="content has-text-centered">
+            <p>
+                <strong><span style="font-size: small;">py_</span>photo-platform</strong> by <a
+                    href="https://marcelschreiber.de">Sprechender (Marcel Schreiber)</a>. The source code is licensed
+                <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
+                is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
+            </p>
+        </div>
     </footer>
-        
 </body>
 
 </html>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // Get all "navbar-burger" elements
+        const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+        // Add a click event on each of them
+        $navbarBurgers.forEach(el => {
+            el.addEventListener('click', () => {
+
+                // Get the target from the "data-target" attribute
+                const target = el.dataset.target;
+                const $target = document.getElementById(target);
+
+                // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+                el.classList.toggle('is-active');
+                $target.classList.toggle('is-active');
+
+            });
+        });
+
+    });
+</script>

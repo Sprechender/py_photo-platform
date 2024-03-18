@@ -100,23 +100,25 @@ def myAccount():
 
 # Add new route to display user-specific page
 @app.route('/user/<int:user_id>', methods=['GET', 'POST'])
-@login_required
 def user_page(user_id):
-    if request.method == 'POST':
-        follow = request.form['button__follow']
-        
-        # Check if the current user already follows the user
-        existing_follow = Follows.query.filter_by(follower_id=current_user.id, followed_id=user_id).first()
-        if existing_follow:
-            db.session.delete(User.query.get(current_user.id))
-            db.session.commit()
-        else:
-            # Create a new follow relationship
-            new_follow = Follows(follower_id=current_user.id, followed_id=user_id)
-            db.session.add(new_follow)
-            db.session.commit()
     user = User.query.get_or_404(user_id)
-    return render_template('user_page.html', user=user, username=user.username, followers=user.followers, bio=user.bio)
+    error__followurself = False
+    if request.method == 'POST':
+        if current_user.is_authenticated == False:
+            return redirect('/login')
+        else:
+            follow = request.form['button__follow']
+        
+            # Check if the current user already follows the user
+            if current_user.id == user_id:
+                error__followurself = True
+                return render_template('user_page.html', user=user, username=user.username, followers=user.followers, bio=user.bio, err__followurself=error__followurself, user_authenticated=current_user.is_authenticated)
+            else:
+                # Create a new follow relationship
+                new_follow = Follows(follower_id=current_user.id, followed_id=user_id)
+                db.session.add(new_follow)
+                db.session.commit()
+    return render_template('user_page.html', user=user, username=user.username, followers=user.followers, bio=user.bio, err__followurself=error__followurself, user_authenticated=current_user.is_authenticated)
 
 @app.route('/usrset/edit', methods=['POST', 'GET'])
 @login_required
