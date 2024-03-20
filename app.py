@@ -3,6 +3,7 @@ import os
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
+import time
 
 # Initialize Flask application
 app = Flask(__name__)
@@ -32,15 +33,26 @@ class User(UserMixin, db.Model):
     followers = db.Column(db.Integer)
 
 # Photo model
-class Photo(db.Model):
+class Photo(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     filename = db.Column(db.String(100))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+# Comments model
+class Comments(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    message = db.Column(db.String(100))
+    likes = db.Column(db.Integer)
+    commentOwnerId = db.Column(db.Integer)
 
 # User loader for Flask-Login
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
+@app.errorhandler(404) 
+def not_found(e): 
+    return render_template("404.html", user_authenticated=current_user.is_authenticated) 
 
 # Home route
 @app.route('/')
@@ -67,7 +79,7 @@ def signup():
         
         # Log in the newly created user
         login_user(new_user)
-        return redirect(url_for('myAccount'))  # Redirect to myAccount route
+        return redirect("/user/"+str(current_user.id))  # Redirect to myAccount route
     
     return render_template('signup.html')
 
@@ -98,6 +110,11 @@ def logout():
 def myAccount():
     return render_template('account.html', username=current_user.username, bio=current_user.bio, followers=current_user.followers)
 
+@app.route('/currentuser', methods=['GET'])
+def redirToCurrentUser():
+    wait
+    return redirect('/user/'+str(current_user.id))
+
 # Add new route to display user-specific page
 @app.route('/user/<int:user_id>', methods=['GET', 'POST'])
 def user_page(user_id):
@@ -111,14 +128,15 @@ def user_page(user_id):
         
             # Check if the current user already follows the user
             if current_user.id == user_id:
-                error__followurself = True
-                return render_template('user_page.html', user=user, username=user.username, followers=user.followers, bio=user.bio, err__followurself=error__followurself, user_authenticated=current_user.is_authenticated)
+                return render_template('user_page.html', user=user, username=user.username, followers=user.followers, bio=user.bio, err__followurself=True, user_authenticated=current_user.is_authenticated, isSiteOwner=True)
             else:
                 # Create a new follow relationship
                 new_follow = Follows(follower_id=current_user.id, followed_id=user_id)
                 db.session.add(new_follow)
                 db.session.commit()
-    return render_template('user_page.html', user=user, username=user.username, followers=user.followers, bio=user.bio, err__followurself=error__followurself, user_authenticated=current_user.is_authenticated)
+    if current_user.id == user_id:
+        return render_template('user_page.html', user=user, username=user.username, followers=user.followers, bio=user.bio, err__followurself=False, user_authenticated=current_user.is_authenticated, isSiteOwner=True) 
+    return render_template('user_page.html', user=user, username=user.username, followers=user.followers, bio=user.bio, err__followurself=False, user_authenticated=current_user.is_authenticated, isSiteOwner=False)
 
 @app.route('/usrset/edit', methods=['POST', 'GET'])
 @login_required

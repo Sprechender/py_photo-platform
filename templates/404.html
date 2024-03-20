@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>py_photo-platform</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/bulma-prefers-dark@0.1.0-beta.1/css/bulma-prefers-dark.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
+    <script src="https://kit.fontawesome.com/2ecfe5bd5c.js" crossorigin="anonymous"></script>
+</head>
+
+
+<body>
+
+    <section class="section">
+        <nav class="navbar" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="https://bulma.io" style="font-weight: bold;">
+                    <span style="font-size: small;">py_</span>photo-platform
+                </a>
+
+                <a role="button" class="navbar-burger" data-target="navMenu" aria-label="menu" aria-expanded="false">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+
+            <style>
+                .fawesomeMenu {
+                    color: #dbdbdb;
+                }
+
+                .fawesomeMenu:hover {
+                    color: #485fc7;
+                }
+            </style>
+
+            <div class="navbar-menu" id="navMenu">
+                <div class="navbar-start">
+                    <a class="navbar-item" href="../">
+                        Home
+                    </a>
+
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link">
+                            Photos
+                        </a>
+
+                        <div class="navbar-dropdown">
+                            <a class="navbar-item" style="font-weight: bold;">
+                                For you
+                            </a>
+                            <a class="navbar-item">
+                                Featured
+                            </a>
+                            <a class="navbar-item">
+                                Recent
+                            </a>
+                            <hr class="navbar-divider">
+                            <a class="navbar-item" style="color: hsl(348, 100%, 61%); font-weight: bold;">
+                                Report an issue
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="navbar-end">
+                    <div class="navbar-item">
+                        <div class="buttons">
+                            {% if not user_authenticated %}
+                            <a class="button is-primary">
+                                <strong>Sign up</strong>
+                            </a>
+                            <a class="button is-light">
+                                Log in
+                            </a>
+                            {% else %}
+                            <a href="/myaccount">
+                                <i class="fas fa-user fa-lg fawesomeMenu"></i>
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </section>
+
+    <section class="section">
+        <div class="columns is-mobile">
+            <div class="column is-three-fifths is-offset-one-fifth" style="text-align: center;">
+                <span class="tag is-danger">
+                    Error Code:&nbsp;<strong>404</strong>!
+                </span>
+
+                <h1 class="title is-1"> Requested resource not found!</h1>
+                <h4 class="title is-4">If you think this is an mistake contact site admin!</h4>
+            
+                <img src="https://images.pexels.com/photos/1056251/pexels-photo-1056251.jpeg" alt="">
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="content has-text-centered">
+            <p>
+                <strong><span style="font-size: small;">py_</span>photo-platform</strong> by <a
+                    href="https://marcelschreiber.de">Sprechender (Marcel Schreiber)</a>. The source code is licensed
+                <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
+                is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
+            </p>
+        </div>
+    </footer>
+</body>
+
+</html>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // Get all "navbar-burger" elements
+        const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+        // Add a click event on each of them
+        $navbarBurgers.forEach(el => {
+            el.addEventListener('click', () => {
+
+                // Get the target from the "data-target" attribute
+                const target = el.dataset.target;
+                const $target = document.getElementById(target);
+
+                // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+                el.classList.toggle('is-active');
+                $target.classList.toggle('is-active');
+
+            });
+        });
+
+    });
+</script>
