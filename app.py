@@ -10,7 +10,7 @@ app = Flask(__name__)
 app.secret_key = 'apfel123123'
 # app.config['SQLALCHEMY_DATABASE_URI'] = r'sqlite:///C:\Users\Marcel\Documents\GitHub\py_photo-platform\database.db'
 # app.config['SQLALCHEMY_DATABASE_URI'] = r'sqlite:///F:\GitHub\py_photo-platform\prod.db.db'
-app.config['SQLALCHEMY_DATABASE_URI'] = r'sqlite:///home/Sprechender/py_photo-platform/prod.db.db' 
+app.config['SQLALCHEMY_DATABASE_URI'] = r'sqlite:/home/Sprechender/py_photo-platform/database.db' 
 
 # Initialize SQLAlchemy
 db = SQLAlchemy(app)
