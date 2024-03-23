@@ -1,9 +1,7 @@
 # Import necessary modules
-import os
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
-import time
 
 # Initialize Flask application
 app = Flask(__name__)
@@ -50,9 +48,9 @@ class Comments(UserMixin, db.Model):
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-@app.errorhandler(404) 
-def not_found(e): 
-    return render_template("404.html", user_authenticated=current_user.is_authenticated) 
+@app.errorhandler(404)
+def not_found(e):
+    return render_template("404.html", user_authenticated=current_user.is_authenticated)
 
 # Home route
 @app.route('/')
@@ -65,22 +63,22 @@ def signup():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        
+
         # Check if the username already exists
         existing_user = User.query.filter_by(username=username).first()
         if existing_user:
             flash('Username already exists. Please choose a different one.')
             return redirect(url_for('signup'))
-        
+
         # Create a new user
         new_user = User(username=username, password=password, bio="Add your Bio here!", followers="0")
         db.session.add(new_user)
         db.session.commit()
-        
+
         # Log in the newly created user
         login_user(new_user)
         return redirect("/user/"+str(current_user.id))  # Redirect to myAccount route
-    
+
     return render_template('signup.html')
 
 # Login route
@@ -92,10 +90,9 @@ def login():
         user = User.query.filter_by(username=username).first()
         if user and user.password == password:
             login_user(user)
-            return redirect(url_for('home'))
+            return redirect("/user/"+str(current_user.id))  # Redirect to myAccount route
         flash('Invalid username or password')
     return render_template('login.html')
-
 
 # Logout route
 @app.route('/logout')
@@ -103,17 +100,6 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('login'))
-
-# my account route
-@app.route('/myaccount')
-@login_required
-def myAccount():
-    return render_template('account.html', username=current_user.username, bio=current_user.bio, followers=current_user.followers)
-
-@app.route('/currentuser', methods=['GET'])
-def redirToCurrentUser():
-    wait
-    return redirect('/user/'+str(current_user.id))
 
 # Add new route to display user-specific page
 @app.route('/user/<int:user_id>', methods=['GET', 'POST'])
@@ -125,7 +111,7 @@ def user_page(user_id):
             return redirect('/login')
         else:
             follow = request.form['button__follow']
-        
+
             # Check if the current user already follows the user
             if current_user.id == user_id:
                 return render_template('user_page.html', user=user, username=user.username, followers=user.followers, bio=user.bio, err__followurself=True, user_authenticated=current_user.is_authenticated, isSiteOwner=True)
@@ -134,8 +120,9 @@ def user_page(user_id):
                 new_follow = Follows(follower_id=current_user.id, followed_id=user_id)
                 db.session.add(new_follow)
                 db.session.commit()
-    if current_user.id == user_id:
-        return render_template('user_page.html', user=user, username=user.username, followers=user.followers, bio=user.bio, err__followurself=False, user_authenticated=current_user.is_authenticated, isSiteOwner=True) 
+    if current_user.is_authenticated == True:
+        if current_user.id == user_id:
+            return render_template('user_page.html', user=user, username=user.username, followers=user.followers, bio=user.bio, err__followurself=False, user_authenticated=current_user.is_authenticated, isSiteOwner=True)
     return render_template('user_page.html', user=user, username=user.username, followers=user.followers, bio=user.bio, err__followurself=False, user_authenticated=current_user.is_authenticated, isSiteOwner=False)
 
 @app.route('/usrset/edit', methods=['POST', 'GET'])
