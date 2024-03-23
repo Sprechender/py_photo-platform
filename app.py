@@ -7,10 +7,15 @@ from flask_login import LoginManager, UserMixin, login_user, logout_user, login_
 app = Flask(__name__)
 app.secret_key = 'apfel123123'
 # app.config['SQLALCHEMY_DATABASE_URI'] = r'sqlite:///C:\Users\Marcel\Documents\GitHub\py_photo-platform\database.db'
-app.config['SQLALCHEMY_DATABASE_URI'] = r'sqlite:///F:\GitHub\py_photo-platform\prod.db.db'
+# app.config['SQLALCHEMY_DATABASE_URI'] = r'sqlite:///F:\GitHub\py_photo-platform\prod.db.db'
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqldb://Sprechender.mysql.pythonanywhere-services.com'
+
+app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {'pool_recycle' : 280}
 
 # Initialize SQLAlchemy
 db = SQLAlchemy(app)
+db.init_app(app)
 
 # Initialize Flask-Login
 login_manager = LoginManager(app)
